@@ -1,6 +1,6 @@
 {% load sorl_thumbnail %}
 <div class="features_items"><!--RetailSale_items-->
-						<a href="shop-2.html"><h2 class="title text-center">محصولات</h2></a>
+						<a href="{% url "product_list2" %}"><h2 class="title text-center">محصولات</h2></a>
 						<div id="new-item-carousel" class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
 						    {% for products in product %}
