@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "shared/_layout.html" %}
+{% load sorl_thumbnail %}
+{% block title %}
+    گالری
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<section>
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">گالری تصاویر</font></font></h2>
+						{% for gallery in galleries %}
+						    <div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+{#										<img src="{{ gallery.image.url }}" alt="">#}
+                                            {% thumbnail gallery.image "484x441" quality=80 crop='center' as im %}
+                                                <img src="{{ im.url }}">
+                                            {% endthumbnail %}
+										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-picture-o"></i><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">نمایش</font></font></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+
+{#						<ul class="pagination">#}
+{#							<li class="active"><a href=""><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">۱</font></font></a></li>#}
+{#							<li><a href=""><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">۲</font></font></a></li>#}
+{#							<li><a href=""><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">۳</font></font></a></li>#}
+{#							<li><a href=""><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">»</font></font></a></li>#}
+{#						</ul>#}
+                    <div class="clearfix"></div>
+						<ul class="pagination">
+{#							<li class="active"><a href="">1</a></li>#}
+{#							<li><a href="">2</a></li>#}
+{#							<li><a href="">3</a></li>#}
+{#							<li><a href="">»</a></li>#}
+                            {% if page_obj.has_previous %}
+                                   <li><a href="?page={{ page_obj.previous_page_number }}">قبلی</a></li>
+                            {% endif %}
+                            {% for pageNumber in paginator.page_range %}
+                                <li class="{% if page_obj.number == pageNumber %}active{% endif %}"><a href="?page={{ pageNumber }}">{{ pageNumber }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                   <li><a href="?page={{ page_obj.next_page_number }}">بعدی</a></li>
+                            {% endif %}
+
+						</ul>
+					</div><!--features_items-->
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
